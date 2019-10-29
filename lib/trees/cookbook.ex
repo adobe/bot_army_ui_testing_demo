@@ -29,8 +29,12 @@ defmodule BotArmyStarter.Trees.Cookbook do
       ]),
       action(Cookbook, :search, ["browser"]),
       action(Cookbook, :validate_search_results, [["Do browser UI testing"]]),
+      action(Common, :wait, [1]),
       action(Cookbook, :click_link, ["Do browser UI testing"]),
       action(Cookbook, :validate_title, ["Bot Army Cookbook - Do browser UI testing"]),
+      action(Common, :wait, [1]),
+      action(Cookbook, :peek_behind_the_curtain),
+      action(Common, :log, ["Whoa....!"]),
       action(Common, :wait, [1])
     ])
   end

@@ -77,7 +77,6 @@ defmodule BotArmyStarter.Actions.Cookbook do
     end
   end
 
-
   @doc """
   Clicks the link with the supplied text.
 
@@ -86,8 +85,24 @@ defmodule BotArmyStarter.Actions.Cookbook do
   def click_link(_context, link_text) do
     Page.find_element(:link_text, link_text)
     |> Element.click()
+
     :succeed
   end
+
+  @doc """
+  Just for fun.
+  """
+  def peek_behind_the_curtain(_context) do
+    Element.click({:link_text, "UI testing demo"})
+    Element.click({:link_text, "lib"})
+    Element.click({:link_text, "actions"})
+    Element.click({:link_text, "cookbook.ex"})
+
+    if Page.visible_page_text() =~ "def peek_behind_the_curtain(_context) do",
+      do: :succeed,
+      else: :fail
+  end
+
   @doc """
   Helper function to retry which manages timout values transparently.
 
