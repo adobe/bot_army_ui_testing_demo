@@ -1,83 +1,41 @@
-### Bot Army Starter
+# Bot Army UI Testing Demo
 
-A starting point for setting up a new bot army.  This includes samples for both load 
-testing and integration/functional testing.
+Can bots use a browser?
 
-See [Bot Army Docs](https://git.corp.adobe.com/pages/manticore/bot_army/readme.html) 
+See [Bot Army Docs](https://git.corp.adobe.com/pages/manticore/bot_army/readme.html)
 on how to use the bot army.
 
-The [Bot Army 
-Cookbook](https://git.corp.adobe.com/pages/manticore/bot_army_cookbook/) is also 
+The [Bot Army
+Cookbook](https://git.corp.adobe.com/pages/manticore/bot_army_cookbook/) is also
 useful.
 
-### Set up
+## Set up
 
-You will need to have Elixir and Erlang installed on your computer/container 
+### 1. Elixir/Erlang and Elixir deps
+
+You will need to have Elixir and Erlang installed on your computer/container
 ([asdf](https://github.com/asdf-vm/asdf-elixir) works well for this).
 
-The `bot_army` dependency is managed via git submodules (since Elixir's dependency 
-management tool can't easily access our corp Github, especially in a docker 
-container).
-
-You can clone the repo and set up the submodules with `git clone --recurse-submodules 
-git@git.corp.adobe.com:manticore/bot_army_starter.git`.
-
-(Alternatively, you can clone the repo like usual and run `git submodule init && git 
-submodule update`.)
+The `bot_army` dependency is managed via git submodules (since Elixir's dependency
+management tool can't easily access our corp Github, especially in a docker
+container). After cloneing this repo, run `git submodule init && git submodule update` to install the bot army dependency.
 
 Then fetch and compile deps with `mix do deps.get, deps.compile`.
 
-If you want to write your tests in the same repo as the project they are testing, you 
-can `mv bot_army_starter your_project/bot_test`.
+### 2. Browser integration tools
 
-### Using
+This project uses [Hound](https://hexdocs.pm/hound/readme.html), as the browser
+automation library. It in turn relies on having some kind of web driver.
 
-The behavior trees are located in `/lib/trees` and the actions are in `/lib/actions`.
+There are a few to choose from (selenium, chromedriver, phantomjs for instance).
+phantomjs or headless chrome with chrome driver is useful if you want a headless
+browser, but if you want to see the what the bot(s) are doing,
+[chromedriver](https://chromedriver.chromium.org/) works well: `brew cask install chromedriver` or download it from the homepage.
 
-Follow the examples and the docs to build out your trees and actions.  You may also 
-need to add a `/lib/bot.ex` module if you need to [customize the 
-bot](https://git.corp.adobe.com/pages/manticore/bot_army/BotArmy.Bot.html#module-extending-the-bot) 
-(to add websocket syncing for example).
+## Running
 
-Keep your actions atomic, and use the structure of the trees to describe the logic of 
-your behaviors.
+You need to run the webdriver first (in the background or a separate window):
+`chromedriver`. Make sure you are configured to use the driver you selected, see
+`config/config.exs`.
 
-### Running locally
-
-You can run the bots locally using the two included mix tasks:
-
-#### Load test runner
-
-`mix bots.load_test --tree BotArmyStarter.Trees.SampleLoad --n 5 --custom 
-'[magic_number: 7]'`
-
-You will see some output.  Press "q" then "enter" to quit the bots and see a summary 
-of their actions.  You can view the full logs at `bot_run.log`.
-
-For convenience, the above command can also be run with `sh lib/trees/run_load.sh` (edit that file to change parameters).
-
-
-#### Integration test runner
-
-`mix bots.integration_test --v --workflow BotArmyStarter.Trees.SampleIntegration 
---custom '[magic_number: 7]'`
-
-This will run all of the tests in parallel, logging output of each test and showing 
-any errors.  It will complete with a standard exit status of 1 or 0, so you can use 
-this in a build pipeline that depends on the exit status.
-
-For convenience, the above command can also be run with `sh lib/trees/run_integration.sh` (edit that file to change parameters).
-
-### Deploying
-
-You can run the bots in a docker container.  A sample docker file is provided, but 
-you will need to adjust it (particularly the `CMD` section).
-
-You can also build a "release" which can be run as an executable.  _Be aware the 
-release can only run on the same OS it was built on!_
-
-Just run `mix release`, which will build it to 
-`_build/prod/rel/bot_army_starter/bin/bot_army_starter`.
-
-To run it `cd _build/prod/rel/bot_army_starter/` and then run `bin/bot_test eval 
-'BotArmyStarter.Run.run(30)'` (See `lib/run.ex`).
+You can run the bots with `lib/trees/run_integration.sh`

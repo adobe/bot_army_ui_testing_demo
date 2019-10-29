@@ -28,3 +28,7 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 #     import_config "#{Mix.env()}.exs"
+
+# Start Hound for ChromeDriver (default port 9515 assumed)
+config :hound, driver: "chrome_driver"
+# config :hound, driver: "chrome_driver", browser: "chrome_headless"
