@@ -94,11 +94,14 @@ defmodule BotArmyStarter.Actions.Cookbook do
   """
   def peek_behind_the_curtain(_context) do
     Element.click({:link_text, "UI testing demo"})
+    Process.sleep(1000)
     Element.click({:link_text, "lib"})
-    Element.click({:link_text, "actions"})
+    Process.sleep(1000)
+    Element.click({:link_text, "trees"})
+    Process.sleep(1000)
     Element.click({:link_text, "cookbook.ex"})
 
-    if Page.visible_page_text() =~ "def peek_behind_the_curtain(_context) do",
+    if Page.visible_page_text() =~ ~S(parallel "Learn how to do UI testing" do),
       do: :succeed,
       else: :fail
   end

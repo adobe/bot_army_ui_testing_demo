@@ -10,7 +10,7 @@ defmodule BotArmyStarter.Trees.Cookbook do
 
   use BotArmy.IntegrationTest.Workflow
 
-  parallel "test" do
+  parallel "Learn how to do UI testing" do
     url = "https://git.corp.adobe.com/pages/manticore/bot_army_cookbook/"
     title = "Bot Army Cookbook - Recipes for building your bots"
     auth_title = "Adobe Inc - Extra Verification"
@@ -27,6 +27,7 @@ defmodule BotArmyStarter.Trees.Cookbook do
         ]),
         action(Cookbook, :validate_title, [title])
       ]),
+      action(Common, :wait, [1]),
       action(Cookbook, :search, ["browser"]),
       action(Cookbook, :validate_search_results, [["Do browser UI testing"]]),
       action(Common, :wait, [1]),
@@ -35,7 +36,7 @@ defmodule BotArmyStarter.Trees.Cookbook do
       action(Common, :wait, [1]),
       action(Cookbook, :peek_behind_the_curtain),
       action(Common, :log, ["Whoa....!"]),
-      action(Common, :wait, [1])
+      action(Common, :wait, [3])
     ])
   end
 end
