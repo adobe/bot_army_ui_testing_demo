@@ -22,8 +22,7 @@ defmodule BotArmyStarter.MixProject do
   defp deps do
     [
       {:credo, "~> 1.1", only: [:dev, :test]},
-      {:behavior_tree, "~> 0.3.0"},
-      {:bot_army, path: "vendor/bot_army/"},
+      {:bot_army, "~> 1.0"},
       {:hound, "~> 1.1"}
     ]
   end
