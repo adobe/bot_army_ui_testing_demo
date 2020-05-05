@@ -1,12 +1,12 @@
 # Bot Army UI Testing Demo
 
-Can bots use a browser?
+Can bots use a browser? Yes they can. This is a demo of the bots browsing the Bot
+Army Cookbook to "learn" how do UI testing.
 
-See [Bot Army Docs](https://git.corp.adobe.com/pages/manticore/bot_army/readme.html)
-on how to use the bot army.
+See [Bot Army Docs](https://hexdocs.pm/bot_army/1.0.0/readme.html) on how to use the
+bot army.
 
-The [Bot Army
-Cookbook](https://git.corp.adobe.com/pages/manticore/bot_army_cookbook/) is also
+The [Bot Army Cookbook](https://opensource.adobe.com/bot_army_cookbook/) is also
 useful.
 
 ## Set up
@@ -15,10 +15,6 @@ useful.
 
 You will need to have Elixir and Erlang installed on your computer/container
 ([asdf](https://github.com/asdf-vm/asdf-elixir) works well for this).
-
-The `bot_army` dependency is managed via git submodules (since Elixir's dependency
-management tool can't easily access our corp Github, especially in a docker
-container). After cloneing this repo, run `git submodule init && git submodule update` to install the bot army dependency.
 
 Then fetch and compile deps with `mix do deps.get, deps.compile`.
 
@@ -38,4 +34,4 @@ You need to run the webdriver first (in the background or a separate window):
 `chromedriver`. Make sure you are configured to use the driver you selected, see
 `config/config.exs`.
 
-You can run the bots with `lib/trees/run_integration.sh`
+You can run the bots with `mix test`.

@@ -32,19 +32,6 @@ defmodule BotArmyStarter.Actions.Cookbook do
   end
 
   @doc """
-  Currently this requires a manual authentication and pressing enter in the console
-  when complete.
-  """
-  def authenticate(_context) do
-    Logger.debug(
-      "\n\nPAGE REQUIRES AUTHENTICATION\n\nPlease authenticate manually, then press 'enter' to continue...\n"
-    )
-
-    IO.gets("")
-    :succeed
-  end
-
-  @doc """
   Finds the main search input and types the supplied text.
 
   Crashes if unable to find the element.
@@ -95,13 +82,11 @@ defmodule BotArmyStarter.Actions.Cookbook do
   def peek_behind_the_curtain(_context) do
     Element.click({:link_text, "UI testing demo"})
     Process.sleep(1000)
-    Element.click({:link_text, "lib"})
+    Element.click({:link_text, "test"})
     Process.sleep(1000)
-    Element.click({:link_text, "trees"})
-    Process.sleep(1000)
-    Element.click({:link_text, "cookbook.ex"})
+    Element.click({:link_text, "bot_army_starter_test.exs"})
 
-    if Page.visible_page_text() =~ ~S(parallel "Learn how to do UI testing" do),
+    if Page.visible_page_text() =~ ~S(test_tree "Learn how to do UI testing", context do),
       do: :succeed,
       else: :fail
   end
