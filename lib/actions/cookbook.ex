@@ -81,10 +81,11 @@ defmodule BotArmyStarter.Actions.Cookbook do
   """
   def peek_behind_the_curtain(_context) do
     Element.click({:link_text, "UI testing demo"})
-    Process.sleep(1000)
+    Process.sleep(1500)
     Element.click({:link_text, "test"})
-    Process.sleep(1000)
+    Process.sleep(1500)
     Element.click({:link_text, "bot_army_starter_test.exs"})
+    Process.sleep(1500)
 
     if Page.visible_page_text() =~ ~S(test_tree "Learn how to do UI testing", context do),
       do: :succeed,
